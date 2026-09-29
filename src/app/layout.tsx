@@ -15,33 +15,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VidForge Forensic Command Hub | Video Recovery & Stream Analysis",
+  title: "VidForge Resource Portal | Forensic Video Recovery & Analysis",
   description:
-    "Centralized mission control, telemetry monitor, and deployment launchpad for VidForge — an advanced forensic CCTV video carving and multi-channel reassembly platform.",
-  keywords: [
-    "VidForge",
-    "Digital Forensics",
-    "CCTV Recovery",
-    "Video Carving",
-    "Dahua DHFS",
-    "Hikvision",
-    "Court Admissible Evidence",
-    "ISO 27037",
-    "Rust Axum",
-  ],
-  authors: [{ name: "VidForge Core Forensics Team" }],
+    "Centralized launchpad and resource portal for VidForge — forensic video recovery, desktop workstation downloads, CCTV test datasets, and project documentation.",
   icons: {
     icon: "/favicon.ico",
-  },
-  openGraph: {
-    title: "VidForge Forensic Command Hub",
-    description: "Centralized navigation hub and live status monitor for the deployed VidForge forensic platform.",
-    type: "website",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07090e",
+  themeColor: "#0A0B0C",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -54,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`dark ${outfit.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-sans bg-obsidian text-slate-100 min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 antialiased relative">
+      <body className="font-sans bg-palette-bg text-palette-text min-h-screen antialiased selection:bg-palette-accent/25 selection:text-palette-text">
         {children}
       </body>
     </html>
