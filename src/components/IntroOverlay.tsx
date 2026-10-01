@@ -73,16 +73,6 @@ export default function IntroOverlay({ onComplete, forcePlay = false }: IntroOve
             onEnded={handleFinish}
             className="w-full h-full object-cover"
           />
-
-          {/* Subtle SKIP INTRO control */}
-          <button
-            type="button"
-            onClick={handleFinish}
-            className="absolute top-6 right-6 z-50 px-3.5 py-1.5 rounded bg-[#111111]/80 hover:bg-[#111111] border border-[#2a2a2a] hover:border-[#F5C400] text-[#929292] hover:text-[#F5C400] text-xs font-mono tracking-wider transition-colors flex items-center gap-1.5 cursor-pointer backdrop-blur-sm"
-          >
-            <span>SKIP INTRO →</span>
-            <span className="text-[10px] text-[#666]">[ESC]</span>
-          </button>
         </motion.div>
       )}
     </AnimatePresence>
