@@ -3,20 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #0A0B0C;
-  --background-secondary: #111315;
-  --surface-card: #17191C;
-  --surface-elevated: #1D2024;
-  --border-primary: #292D32;
-  --border-secondary: #353A40;
-  --text-primary: #F2F1EC;
-  --text-secondary: #A6A9AD;
-  --text-muted: #70757B;
-  --accent-primary: #F5C542;
-  --accent-hover: #FFD75A;
-  --surface-amber-black: #29230F;
-  --status-success: #5FAE73;
-  --status-error: #C95C5C;
+  --background: #090909;
+  --surface: #111111;
+  --surface-secondary: #171717;
+  --border: #292929;
+  --text-primary: #F5F5F0;
+  --text-secondary: #929292;
+  --accent-yellow: #F5C400;
+  --accent-yellow-hover: #FFD21A;
 }
 
 * {
@@ -29,8 +23,8 @@ html {
 }
 
 body {
-  background-color: #0A0B0C;
-  color: #F2F1EC;
+  background-color: #090909;
+  color: #F5F5F0;
   min-height: 100vh;
   overflow-x: hidden;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
@@ -38,35 +32,103 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle micro-grid with Dark Steel lines */
-.bg-technical-grid {
-  background-size: 32px 32px;
+/* Restrained technical hairline grid */
+.bg-forensic-grid {
+  background-size: 24px 24px;
   background-image: 
-    linear-gradient(to right, rgba(41, 45, 50, 0.4) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(41, 45, 50, 0.4) 1px, transparent 1px);
+    linear-gradient(to right, rgba(41, 41, 41, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(41, 41, 41, 0.4) 1px, transparent 1px);
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Minimal & Discrete */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0B0C;
+  background: #090909;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #292D32;
-  border-radius: 3px;
+  background: #292929;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #353A40;
+  background: #F5C400;
 }
 
-/* Text Selection */
+/* Text Selection - Forensic Yellow */
 ::selection {
-  background: rgba(245, 197, 66, 0.25);
-  color: #F2F1EC;
+  background: rgba(245, 196, 0, 0.25);
+  color: #F5F5F0;
 }
+
+/* Forensic CCTV Camera Surveillance Scanning Animation
+   - Starts angled slightly upward/inward (+14deg)
+   - Deliberately pans DOWNWARD through horizontal to lower position (-30deg, looking toward DVR/data path)
+   - Settles at low point
+   - Deliberately returns UPWARD to start (+14deg)
+   - Pivots around physical mounting joint (119px, 92px)
+*/
+@keyframes cctvSurveillanceScan {
+  0%, 12% {
+    transform: rotate(14deg);
+  }
+  13% {
+    transform: rotate(13.4deg);
+  }
+  14% {
+    transform: rotate(14deg);
+  }
+  46% {
+    transform: rotate(-30.6deg);
+  }
+  48%, 58% {
+    transform: rotate(-30deg);
+  }
+  59% {
+    transform: rotate(-29.4deg);
+  }
+  60% {
+    transform: rotate(-30deg);
+  }
+  92% {
+    transform: rotate(13.4deg);
+  }
+  100% {
+    transform: rotate(14deg);
+  }
+}
+
+.cctv-scanner-head {
+  transform-box: view-box;
+  transform-origin: 119px 92px;
+  animation: cctvSurveillanceScan 8.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+/* Dotted Data Stream Flow Animation (Continuous downward flow: CCTV -> DVR/NVR) */
+@keyframes cctvDataFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 36px;
+  }
+}
+
+.cctv-data-stream {
+  animation: cctvDataFlow 2.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cctv-scanner-head {
+    animation: none !important;
+    transform: rotate(-10deg) !important;
+  }
+  .cctv-data-stream {
+    animation: none !important;
+  }
+}
+

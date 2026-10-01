@@ -11,20 +11,20 @@ const config: Config = {
     extend: {
       colors: {
         palette: {
-          bg: "#0A0B0C",           // Primary background: Matte Black
-          "bg-secondary": "#111315",// Secondary background: Charcoal Black
-          card: "#17191C",         // Card surface: Graphite
-          elevated: "#1D2024",     // Elevated surface: Soft Graphite
-          border: "#292D32",       // Primary border: Dark Steel
-          "border-subtle": "#353A40", // Secondary border: Subtle Gray
-          text: "#F2F1EC",         // Primary text: Warm White
-          "text-secondary": "#A6A9AD", // Secondary text: Cool Gray
-          muted: "#70757B",        // Muted text: Slate Gray
-          accent: "#F5C542",       // Primary accent: Forensic Yellow
-          "accent-hover": "#FFD75A", // Bright accent/hover: Signal Yellow
-          "amber-black": "#29230F", // Dark yellow surface: Amber Black
-          success: "#5FAE73",      // Success: Muted Green
-          error: "#C95C5C",        // Error: Muted Red
+          bg: "#090909",              // Background: Matte black
+          "bg-secondary": "#111111",  // Surface: Dark charcoal
+          card: "#111111",            // Surface: Dark charcoal
+          elevated: "#171717",        // Secondary surface
+          border: "#292929",          // Border: Minimal border
+          "border-subtle": "#202020", // Subtle border
+          text: "#F5F5F0",            // Primary text: Off-white
+          "text-secondary": "#929292",// Secondary text
+          muted: "#929292",           // Secondary/muted text
+          accent: "#F5C400",          // Accent yellow: Forensic yellow
+          "accent-hover": "#FFD21A",  // Bright yellow hover
+          "amber-black": "#1E1906",   // Subtle yellow-tinted charcoal for primary CTA contrast
+          success: "#4EAD6A",         // Restrained status green
+          error: "#C95C5C",           // Restrained status red
         },
       },
       fontFamily: {
@@ -37,3 +37,4 @@ const config: Config = {
 };
 
 export default config;
+

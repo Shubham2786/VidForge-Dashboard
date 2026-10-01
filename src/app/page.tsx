@@ -1,90 +1,75 @@
 "use client";
 
-import PortalHero from "@/components/PortalHero";
-import PrimaryLaunch from "@/components/PrimaryLaunch";
-import ResourceGrid from "@/components/ResourceGrid";
-import DownloadsSection from "@/components/DownloadsSection";
-import ForensicDataSection from "@/components/ForensicDataSection";
-import ProjectStorageSection from "@/components/ProjectStorageSection";
-import {
-  CORE_RESOURCES,
-  SOFTWARE_BUILDS,
-  FORENSIC_DATASETS,
-  STORAGE_FOLDERS,
-} from "@/data/portalData";
-import { ShieldCheck, Github } from "lucide-react";
+import { useState, useEffect } from "react";
+import ForensicHeader from "@/components/ForensicHeader";
+import PrimaryHeroCard from "@/components/PrimaryHeroCard";
+import ApplicationsSection from "@/components/ApplicationsSection";
+import ProjectResourcesSection from "@/components/ProjectResourcesSection";
+import ForensicFooter from "@/components/ForensicFooter";
+import IntroOverlay from "@/components/IntroOverlay";
+import CctvCamera from "@/components/CctvCamera";
 
 export default function Home() {
-  // URLs loaded directly from environment variables
-  const targetUrl =
-    process.env.NEXT_PUBLIC_VIDFORGE_URL || "https://vidforge-forensics.onrender.com";
+  const [targetUrl] = useState(
+    process.env.NEXT_PUBLIC_VIDFORGE_URL || "https://vidforge-forensics.onrender.com"
+  );
   const githubRepo =
     process.env.NEXT_PUBLIC_GITHUB_REPO || "https://github.com/ashok280705/VIDEO";
+  const projectDriveUrl = process.env.NEXT_PUBLIC_PROJECT_DRIVE_URL;
 
-  const coreResources = CORE_RESOURCES(targetUrl, githubRepo);
-  const builds = SOFTWARE_BUILDS(githubRepo);
-  const datasets = FORENSIC_DATASETS(targetUrl, githubRepo);
-  const storageFolders = STORAGE_FOLDERS(githubRepo);
+  // Intro video overlay state
+  const [mounted, setMounted] = useState<boolean>(false);
+  const [introActive, setIntroActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Session storage check: show intro once per browser session
+    const alreadySeen = sessionStorage.getItem("vidforge-intro-seen") === "true";
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!alreadySeen && !prefersReduced) {
+      setIntroActive(true);
+    }
+  }, []);
+
+  const handleIntroComplete = () => {
+    setIntroActive(false);
+  };
 
   return (
-    <div className="min-h-screen bg-palette-bg text-palette-text flex flex-col font-sans">
-      {/* Subtle technical background grid with dark steel lines */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-technical-grid opacity-60" aria-hidden="true" />
+    <>
+      {/* Full-Screen Video Intro Overlay */}
+      {mounted && introActive && (
+        <IntroOverlay onComplete={handleIntroComplete} />
+      )}
 
-      {/* Main Content Container */}
-      <main className="relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-10">
-        {/* 1. Main Hero */}
-        <section aria-label="Portal Header">
-          <PortalHero githubRepo={githubRepo} />
-        </section>
+      {/* Main VidForge Dashboard (Preserved exactly as existing) */}
+      <div className="min-h-screen bg-[#090909] text-[#F5F5F0] flex flex-col font-sans selection:bg-[#F5C400]/25 selection:text-[#F5F5F0]">
+        {/* 1. Header / Identity */}
+        <ForensicHeader githubRepo={githubRepo} />
 
-        {/* 2. Primary Launch Action (Dominant Card) */}
-        <section aria-label="Primary Application Action">
-          <PrimaryLaunch targetUrl={targetUrl} />
-        </section>
+        {/* Main Container - Focused Resource Hub */}
+        <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-8">
+          {/* 2. Primary Workspace (Visually Dominant) */}
+          <PrimaryHeroCard targetUrl={targetUrl} />
 
-        {/* 3. Core Resource Grid (3-column, compact & scannable) */}
-        <section aria-label="Core Resources">
-          <ResourceGrid resources={coreResources} />
-        </section>
+          {/* 3. Applications (Desktop & Portable Builds) */}
+          <ApplicationsSection githubRepo={githubRepo} />
 
-        {/* 4. Software Downloads Section */}
-        <section aria-label="Software Downloads">
-          <DownloadsSection builds={builds} />
-        </section>
+          {/* 4. Project Resources (Unified Cards) */}
+          <ProjectResourcesSection
+            targetUrl={targetUrl}
+            githubRepo={githubRepo}
+            projectDriveUrl={projectDriveUrl}
+          />
+        </main>
 
-        {/* 5. Forensic Datasets & Raw Files Section */}
-        <section aria-label="Forensic Datasets">
-          <ForensicDataSection datasets={datasets} />
-        </section>
+        {/* 5. Footer */}
+        <ForensicFooter />
 
-        {/* 6. Project Storage & Drive Resources */}
-        <section aria-label="Project Storage">
-          <ProjectStorageSection folders={storageFolders} />
-        </section>
-      </main>
-
-      {/* Clean, Restrained Footer */}
-      <footer className="relative z-10 border-t border-palette-border bg-palette-bg-secondary py-6 mt-16 text-xs text-palette-muted">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-palette-muted" />
-            <span>VidForge Forensic Suite • ISO/IEC 27037 Evidentiary Standards</span>
-          </div>
-
-          <div className="flex items-center gap-4 font-mono text-[11px]">
-            <a
-              href={githubRepo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-palette-text-secondary hover:text-palette-accent transition-colors inline-flex items-center gap-1"
-            >
-              <Github className="w-3.5 h-3.5" />
-              <span>ashok280705/VIDEO</span>
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
+        {/* 6. Fixed CCTV Surveillance Illustration (Bottom-Right Viewport) */}
+        <CctvCamera introActive={introActive} />
+      </div>
+    </>
   );
 }
